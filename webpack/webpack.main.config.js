@@ -8,20 +8,20 @@ module.exports = merge(baseConfig, {
     mode: 'development',
     target: 'electron-main',
     entry: {
-        main: './src/main/index.js'
+        main: './src/main/index.js',
     },
     module: {
         rules: [
             {
                 test: /\.js?$/,
                 include: [path.resolve(__dirname, '../src/main')],
-                loader: 'babel-loader'
-            }
-        ]
+                loader: 'babel-loader',
+            },
+        ],
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-        })
-    ]
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+        }),
+    ],
 });
