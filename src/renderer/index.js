@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'mobx-react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import MainRouter from './routes';
@@ -9,9 +8,4 @@ import './app.css';
 
 const store = getStore();
 
-ReactDOM.render(
-    <Provider store={store}>
-        <ConfigProvider locale={zhCN}>{MainRouter}</ConfigProvider>
-    </Provider>,
-    document.getElementById('app')
-);
+ReactDOM.render(<ConfigProvider locale={zhCN}>{MainRouter}</ConfigProvider>, document.getElementById('app'));

@@ -1,12 +1,21 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-
-const styles = require('./styles/index.less');
+import { Button, Typography } from 'antd';
+import useWordsModel from '../../stores/useWordsModel';
+import * as styles from './index.module.less';
 
 const MainView = () => {
+    const { words, setWords } = useWordsModel();
     return (
-        <div className={styles.container}>
-            <span>hello world</span>
+        <div className={styles.default.container}>
+            <Button
+                type="primary"
+                onClick={() => {
+                    setWords('Hello World !');
+                }}>
+                Greeting
+            </Button>
+            {words && <Typography>{words}</Typography>}
         </div>
     );
 };
