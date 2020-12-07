@@ -1,0 +1,83 @@
+{
+    "name": "desktop",
+    "version": "1.0.0",
+    "main": "./dist/main.js",
+    "author": "daihy",
+    "license": "MIT",
+    "scripts": {
+        "start-renderer-dev": "webpack serve --config webpack/webpack.renderer.dev.config.js",
+        "start-main-dev": "webpack --config webpack/webpack.main.config.js && electron ./dist/main.js",
+        "dev": "cross-env START_HOT=1 npm run start-renderer-dev",
+        "build-main": "cross-env NODE_ENV=production webpack --config webpack/webpack.main.prod.config.js",
+        "build-renderer": "cross-env NODE_ENV=production webpack --config webpack/webpack.renderer.prod.config.js",
+        "build-all": "npm run build-main && npm run build-renderer",
+        "clean": "rimraf dist && rimraf build",
+        "build": "npm run clean && npm run build-all && electron-builder"
+    },
+    "build": {
+        "productName": "ts-desktop",
+        "appId": "com.daihy",
+        "mac": {
+            "category": "com.daihy"
+        },
+        "directories": {
+            "output": "release"
+        },
+        "files": [
+            "dist/",
+            "!node_modules"
+        ],
+        "win": {
+            "target": "nsis"
+        }
+    },
+    "dependencies": {
+        "@ant-design/icons": "^4.3.0",
+        "antd": "^4.9.1",
+        "axios": "^0.21.0",
+        "classnames": "^2.2.6",
+        "electron-store": "^6.0.1",
+        "lodash": "^4.17.20",
+        "mobx": "^6.0.4",
+        "mobx-react": "^7.0.5",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-router-dom": "^5.2.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.12.9",
+        "@babel/plugin-proposal-class-properties": "^7.12.1",
+        "@babel/plugin-proposal-decorators": "^7.12.1",
+        "@babel/preset-react": "^7.12.7",
+        "babel-eslint": "^10.1.0",
+        "babel-loader": "^8.2.2",
+        "babel-plugin-import": "^1.13.3",
+        "cross-env": "^7.0.3",
+        "css-loader": "^5.0.1",
+        "electron": "^11.0.3",
+        "electron-builder": "^22.9.1",
+        "electron-devtools-installer": "^3.1.1",
+        "eslint": "^7.15.0",
+        "eslint-config-prettier": "^7.0.0",
+        "eslint-plugin-babel": "^5.3.1",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-jsx-a11y": "^6.4.1",
+        "eslint-plugin-markdown": "^1.0.2",
+        "eslint-plugin-prettier": "^3.2.0",
+        "eslint-plugin-react": "^7.21.5",
+        "eslint-webpack-plugin": "^2.4.1",
+        "html-webpack-plugin": "^4.5.0",
+        "less": "^3.12.2",
+        "less-loader": "^7.1.0",
+        "mini-css-extract-plugin": "^1.3.2",
+        "prettier": "^2.2.1",
+        "react-hot-loader": "^4.13.0",
+        "rimraf": "^3.0.2",
+        "style-loader": "^2.0.0",
+        "url-loader": "^4.1.1",
+        "webpack": "^5.10.0",
+        "webpack-cli": "^4.2.0",
+        "webpack-dev-server": "^3.11.0",
+        "webpack-merge": "^5.4.0"
+    }
+}
