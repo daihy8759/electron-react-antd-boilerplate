@@ -8,22 +8,24 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
 
 let win;
 
-const installExtensions = async () => {
-    return Promise.all([installExtension(REACT_DEVELOPER_TOOLS)]);
-};
+if (process.env.NODE_ENV !== 'production') {
+    app.whenReady().then(() => {
+        installExtension(REACT_DEVELOPER_TOOLS)
+            .then((name) => console.log(`Added Extension:  ${name}`))
+            .catch((err) => console.log('An error occurred: ', err));
+    });
+}
 
 const createWindow = async () => {
-    if (process.env.NODE_ENV !== 'production') {
-        await installExtensions();
-    }
-
     win = new BrowserWindow({
-        fullscreen: true,
+        fullscreen: false,
+        width: 800,
+        height: 500,
         webPreferences: {
-            webSecurity: false,
             nodeIntegration: true,
-            enableRemoteModule: true
-        }
+            enableRemoteModule: true,
+            plugins: true,
+        },
     });
 
     ipcMain.on('set-cookie', async (event, arg) => {
@@ -32,7 +34,7 @@ const createWindow = async () => {
         event.returnValue = 'pong';
     });
     const filter = {
-        urls: ['https://*/*']
+        urls: ['https://*/*'],
     };
     session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
         details.requestHeaders['Referer'] = store.get('url');
@@ -46,7 +48,7 @@ const createWindow = async () => {
             url.format({
                 pathname: path.join(__dirname, 'index.html'),
                 protocol: 'file:',
-                slashes: true
+                slashes: true,
             })
         );
     }
@@ -75,6 +77,6 @@ app.on('activate', () => {
     }
 });
 
-process.on('SIGINT', function() {
+process.on('SIGINT', function () {
     process.exit(0);
 });
